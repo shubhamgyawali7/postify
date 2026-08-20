@@ -1,0 +1,14 @@
+Here are the login credentials and tokens:
+Alice (USER)
+- Email: alice@test.com
+- Password: pass123
+- Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhbGljZUB0ZXN0LmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg3MjIxNTkyLCJleHAiOjE3ODczMDc5OTJ9.s3c2l_HtiIjXLqpdpypeTv5xtq6aW-_U_r6SSNV_M-E
+Bob (USER)
+- Email: bob@test.com
+- Password: pass123
+- Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJib2JAdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc4NzIyMTU5MywiZXhwIjoxNzg3MzA3OTkzfQ.duQfODGV5LLvYuz6I3xhJ4ZGlaypmKNqB_1A0PnMonY
+Admin (ADMIN)
+- Email: contact@post.com
+- Password: admin123
+- Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJjb250YWN0QHBvc3QuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzg3MjIxNTk0LCJleHAiOjE3ODczMDc5OTR9.loxpGfdRQdbPy6NGJN4LuXcA3d3lyWFkuDUp9vpPZ8U
+Quick test
