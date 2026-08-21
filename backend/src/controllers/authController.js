@@ -7,8 +7,9 @@ const PASSWORD_MIN_LENGTH = 8;
 
 const cookieOptions = {
   httpOnly: true,
-  secure: env.NODE_ENV === "production",
-  sameSite: "lax",
+  secure: true,
+  sameSite: "none",
+  // sameSite: "lax",
   maxAge: 24 * 60 * 60 * 1000,
 };
 
@@ -34,12 +35,10 @@ const register = async (req, res) => {
     }
 
     if (password.length < PASSWORD_MIN_LENGTH) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          error: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
-        });
+      return res.status(400).json({
+        success: false,
+        error: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+      });
     }
 
     const existing = await authService.findUserByEmail(email);
