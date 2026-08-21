@@ -72,10 +72,7 @@ const Login = () => {
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700">Password</label>
-              <button type="button" className="text-xs font-medium text-indigo-600 hover:text-indigo-700">Forgot?</button>
-            </div>
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
             <div className="relative">
               <LockKeyhole size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input

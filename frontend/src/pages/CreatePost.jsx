@@ -132,7 +132,7 @@ const CreatePost = () => {
                 <label className="flex flex-col items-center justify-center w-full p-8 border-2 border-dashed border-slate-300 rounded-xl text-center cursor-pointer hover:border-indigo-400 hover:bg-indigo-50/50 transition-all">
                   <ImagePlus size={20} className="text-slate-400 mb-2" />
                   <span className="text-sm font-medium text-slate-600">Click to upload</span>
-                  <span className="text-xs text-slate-400 mt-0.5">PNG, JPG, GIF up to 10MB</span>
+                  <span className="text-xs text-slate-400 mt-0.5">PNG, JPG, GIF up to 5MB</span>
                   <input type="file" accept="image/*" onChange={handleImageChange} required className="hidden" />
                 </label>
               )}

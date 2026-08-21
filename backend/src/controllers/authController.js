@@ -8,7 +8,7 @@ const PASSWORD_MIN_LENGTH = 8;
 const cookieOptions = {
   httpOnly: true,
   secure: env.NODE_ENV === "production",
-  sameSite: "strict",
+  sameSite: "lax",
   maxAge: 24 * 60 * 60 * 1000,
 };
 
@@ -16,34 +16,56 @@ const register = async (req, res) => {
   const { name, email, password } = req.body;
   try {
     if (!name || !email || !password) {
-      return res.status(400).json({ success: false, error: "Missing required fields" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Missing required fields" });
     }
 
     if (name.length < 2 || name.length > 50) {
-      return res.status(400).json({ success: false, error: "Name must be 2-50 characters" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Name must be 2-50 characters" });
     }
 
     if (!EMAIL_REGEX.test(email)) {
-      return res.status(400).json({ success: false, error: "Invalid email format" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid email format" });
     }
 
     if (password.length < PASSWORD_MIN_LENGTH) {
-      return res.status(400).json({ success: false, error: `Password must be at least ${PASSWORD_MIN_LENGTH} characters` });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          error: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+        });
     }
 
     const existing = await authService.findUserByEmail(email);
     if (existing) {
-      return res.status(409).json({ success: false, error: "Email already in use" });
+      return res
+        .status(409)
+        .json({ success: false, error: "Email already in use" });
     }
     const user = await authService.createUser({ name, email, password });
 
-    const token = createToken({ id: user.id, email: user.email, role: user.role });
+    const token = createToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
     res.cookie("token", token, cookieOptions);
 
     res.status(201).json({
       success: true,
-      data: { id: user.id, name: user.name, email: user.email, role: user.role },
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
       token,
     });
   } catch (error) {
@@ -56,30 +78,47 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
-      return res.status(400).json({ success: false, error: "Missing required fields" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Missing required fields" });
     }
 
     if (!EMAIL_REGEX.test(email)) {
-      return res.status(400).json({ success: false, error: "Invalid email format" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid email format" });
     }
 
     const user = await authService.findUserByEmail(email);
     if (!user) {
-      return res.status(401).json({ success: false, error: "Invalid email or password" });
+      return res
+        .status(401)
+        .json({ success: false, error: "Invalid email or password" });
     }
 
     const isMatch = await authService.comparePassword(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ success: false, error: "Invalid email or password" });
+      return res
+        .status(401)
+        .json({ success: false, error: "Invalid email or password" });
     }
 
-    const token = createToken({ id: user.id, email: user.email, role: user.role });
+    const token = createToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
     res.cookie("token", token, cookieOptions);
 
     res.status(200).json({
       success: true,
-      data: { id: user.id, name: user.name, email: user.email, role: user.role },
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
       token,
     });
   } catch (error) {
@@ -106,7 +145,12 @@ const getMe = async (req, res) => {
     }
     res.status(200).json({
       success: true,
-      data: { id: user.id, name: user.name, email: user.email, role: user.role },
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (error) {
     console.error("Error getting user:", error);

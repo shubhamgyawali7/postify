@@ -24,6 +24,7 @@ const PostDetails = () => {
   const [error, setError] = useState("");
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [likeLoading, setLikeLoading] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
   const [commentLoading, setCommentLoading] = useState(false);
@@ -51,21 +52,33 @@ const PostDetails = () => {
         const res = await commentsApi.getComments(id);
         setComments(res.data.data);
       } catch {
-        // silent fail
+       toast.error("Failed to load comments");
       }
     };
     fetchComments();
   }, [id, post]);
 
   const handleLike = async () => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || likeLoading) return;
+
+    const prevLiked = liked;
+    const prevCount = likeCount;
+    const nextLiked = !liked;
+
+    setLiked(nextLiked);
+    setLikeCount(prevCount + (nextLiked ? 1 : -1));
+    setLikeLoading(true);
+
     try {
       const res = await postsApi.toggleLike(id);
       setLiked(res.data.data.liked);
       setLikeCount(res.data.data.likesCount);
-      toast.success(res.data.data.liked ? "Liked" : "Unliked");
     } catch {
-      toast.error("Failed to like");
+      setLiked(prevLiked);
+      setLikeCount(prevCount);
+      toast.error("Failed to update like");
+    } finally {
+      setLikeLoading(false);
     }
   };
 
@@ -157,7 +170,7 @@ const PostDetails = () => {
           <div className="flex items-center gap-3 mt-8 pt-5 border-t border-slate-100">
             <button
               onClick={handleLike}
-              disabled={!isAuthenticated}
+              disabled={!isAuthenticated || likeLoading}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                 liked
                   ? "bg-indigo-50 text-indigo-600 border border-indigo-200"

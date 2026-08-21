@@ -11,12 +11,14 @@ import {
   ChevronDown,
   LayoutDashboard,
   Feather,
+  Plus,
 } from "lucide-react";
 import {
   HOME_ROUTE,
   LOGIN_ROUTE,
   REGISTER_ROUTE,
   ADMIN_ROUTE,
+  POST_CREATE_ROUTE,
 } from "../routes/route.js";
 
 const Navbar = () => {
