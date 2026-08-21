@@ -8,16 +8,18 @@ import authRoutes from "./routes/auth.routes.js";
 import env from "./config/env.js";
 import prisma from "./config/prisma.js";
 import cookieParser from "cookie-parser";
-import multer from "multer";
+// import multer from "multer";
 
 const app = express();
 
 app.use(helmet());
 app.use(cookieParser());
-app.use(cors({
-  origin: env.CLIENT_URL,
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: env.CLIENT_URL,
+    credentials: true,
+  }),
+);
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
@@ -36,21 +38,9 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error(err);
 
-  if (err instanceof multer.MulterError) {
-    const message =
-      err.code === "LIMIT_FILE_SIZE"
-        ? "Image must be under 5MB"
-        : err.message;
-    return res.status(400).json({ success: false, error: message });
-  }
-
-  if (err.message === "Unsupported file format. Images only!") {
-    return res.status(400).json({ success: false, error: err.message });
-  }
-
   res.status(500).json({ success: false, error: "Internal server error" });
 });
-
+console.log("Checking........");
 const start = async () => {
   try {
     await prisma.$connect();
