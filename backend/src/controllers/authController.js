@@ -8,7 +8,7 @@ const PASSWORD_MIN_LENGTH = 8;
 const cookieOptions = {
   httpOnly: true,
   secure: true,
-  sameSite: none,
+  sameSite: "none",
   maxAge: 24 * 60 * 60 * 1000,
 };
 
